@@ -255,8 +255,8 @@ func (c Cost) IsZero() bool {
 	return c.Amount() == 0 && c.Currency == ""
 }
 
-// Add accumulates another cost. It keeps the first non-empty currency.
-func (c *Cost) Add(r *Cost) {
+// Add returns the sum of c and r. It keeps the first non-empty currency.
+func (c Cost) Add(r Cost) Cost {
 	c.Input += r.Input
 	c.Output += r.Output
 	c.CacheRead += r.CacheRead
@@ -265,6 +265,7 @@ func (c *Cost) Add(r *Cost) {
 	if c.Currency == "" {
 		c.Currency = r.Currency
 	}
+	return c
 }
 
 func (c Cost) String() string {
@@ -326,7 +327,7 @@ func (u *Usage) Add(r *Usage) {
 	u.ReasoningTokens += r.ReasoningTokens
 	u.OutputTokens += r.OutputTokens
 	u.TotalTokens += r.TotalTokens
-	u.Cost.Add(&r.Cost)
+	u.Cost = u.Cost.Add(r.Cost)
 }
 
 // RateLimitType defines the type of rate limit.

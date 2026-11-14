@@ -111,9 +111,9 @@ func TestCost(t *testing.T) {
 	})
 	t.Run("Add", func(t *testing.T) {
 		c := Cost{Input: 0.1, Output: 0.2, Total: 0.3, Currency: "USD"}
-		c.Add(&Cost{Input: 0.4, Output: 0.5, Total: 0.9, Currency: "EUR"})
+		got := c.Add(Cost{Input: 0.4, Output: 0.5, Total: 0.9, Currency: "EUR"})
 		want := Cost{Input: 0.5, Output: 0.7, Total: 1.2, Currency: "USD"}
-		if diff := cmp.Diff(want, c); diff != "" {
+		if diff := cmp.Diff(want, got); diff != "" {
 			t.Fatalf("Cost.Add() mismatch (-want +got):\n%s", diff)
 		}
 	})

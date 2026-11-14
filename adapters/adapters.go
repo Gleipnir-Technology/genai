@@ -47,7 +47,7 @@ func GenSyncWithToolCallLoop(ctx context.Context, p genai.Provider, msgs genai.M
 		usage.ReasoningTokens += res.Usage.ReasoningTokens
 		usage.OutputTokens += res.Usage.OutputTokens
 		usage.TotalTokens += res.Usage.TotalTokens
-		usage.Cost.Add(&res.Usage.Cost)
+		usage.Cost = usage.Cost.Add(res.Usage.Cost)
 		if res.Usage.ContextTokens != 0 {
 			usage.ContextTokens = res.Usage.ContextTokens
 		}
@@ -129,7 +129,7 @@ func GenStreamWithToolCallLoop(ctx context.Context, p genai.Provider, msgs genai
 			usage.ReasoningTokens += res.Usage.ReasoningTokens
 			usage.OutputTokens += res.Usage.OutputTokens
 			usage.TotalTokens += res.Usage.TotalTokens
-			usage.Cost.Add(&res.Usage.Cost)
+			usage.Cost = usage.Cost.Add(res.Usage.Cost)
 			if res.Usage.ContextTokens != 0 {
 				usage.ContextTokens = res.Usage.ContextTokens
 			}
@@ -213,7 +213,7 @@ func (c *ProviderUsage) GenSync(ctx context.Context, msgs genai.Messages, opts .
 	c.accumUsage.ReasoningTokens += res.Usage.ReasoningTokens
 	c.accumUsage.OutputTokens += res.Usage.OutputTokens
 	c.accumUsage.TotalTokens += res.Usage.TotalTokens
-	c.accumUsage.Cost.Add(&res.Usage.Cost)
+	c.accumUsage.Cost = c.accumUsage.Cost.Add(res.Usage.Cost)
 	if res.Usage.ContextTokens != 0 {
 		c.accumUsage.ContextTokens = res.Usage.ContextTokens
 	}
@@ -237,7 +237,7 @@ func (c *ProviderUsage) GenStream(ctx context.Context, msgs genai.Messages, opts
 		c.accumUsage.ReasoningTokens += res.Usage.ReasoningTokens
 		c.accumUsage.OutputTokens += res.Usage.OutputTokens
 		c.accumUsage.TotalTokens += res.Usage.TotalTokens
-		c.accumUsage.Cost.Add(&res.Usage.Cost)
+		c.accumUsage.Cost = c.accumUsage.Cost.Add(res.Usage.Cost)
 		if res.Usage.ContextTokens != 0 {
 			c.accumUsage.ContextTokens = res.Usage.ContextTokens
 		}
